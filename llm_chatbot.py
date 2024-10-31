@@ -2,6 +2,7 @@ from langchain_databricks import ChatDatabricks
 from langchain.prompts import ChatPromptTemplate
 from langchain.chains import LLMChain
 from langchain.memory import ConversationBufferMemory
+import time
 
 # Initialize the ChatDatabricks model
 chat_model = ChatDatabricks(
@@ -28,8 +29,18 @@ llm_chain = LLMChain(
 
 # Function to interact with the chatbot
 def chat_with_bot(user_input):
-    response = llm_chain.predict(human_input=user_input)
-    return response
+    max_retries = 3
+    for attempt in range(max_retries):
+        try:
+            response = llm_chain.predict(human_input=user_input)
+            return response
+        except Exception as e:
+            if attempt < max_retries - 1:
+                print(f"An error occurred: {e}. Retrying in 5 seconds...")
+                time.sleep(5)
+            else:
+                return f"I'm sorry, I'm having trouble responding right now. 
+Error: {e}"
 
 # Example usage
 while True:
