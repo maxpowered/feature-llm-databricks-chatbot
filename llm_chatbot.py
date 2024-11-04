@@ -43,9 +43,11 @@ def chat_with_bot(user_input):
 Error: {e}"
 
 # Example usage
+print("Hi there! Type 'exit' to end the conversation.")
 while True:
     user_input = input("You: ")
-    if user_input.lower() == 'exit':
+    if user_input.lower() in ['exit', 'quit', 'bye']:
+        print("Bot: Goodbye! Thanks for chatting.")
         break
     bot_response = chat_with_bot(user_input)
     print("Bot:", bot_response)
