@@ -5,10 +5,12 @@ from langchain.memory import ConversationBufferMemory
 import time
 
 # Initialize the ChatDatabricks model
+
 chat_model = ChatDatabricks(
     endpoint="databricks-meta-llama-3-1-70b-instruct",
     temperature=0.7,
-    max_tokens=250
+    max_tokens=250,
+    timeout=30  # Add 30-second timeout
 )
 
 # Create a prompt template
